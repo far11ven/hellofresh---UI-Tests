@@ -24,12 +24,13 @@ import com.google.common.io.Files;
 import com.hellofresh.driverfactory.DriverManager;
 import com.hellofresh.driverfactory.DriverManagerFactory;
 import com.hellofresh.pages.LoginPage;
+import com.hellofresh.utils.ConfigReader;
+import com.hellofresh.utils.GlobalUtils;
 import com.hellofresh.utils.LogUtils;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 public class AllStepDefinition{
@@ -42,27 +43,31 @@ public class AllStepDefinition{
 
 	String fullName = "Joe Black";
 
-	private final LogUtils LOGGER = new LogUtils(AllStepDefinition.class);
+	private static final LogUtils LOGGER = new LogUtils(AllStepDefinition.class);
+	private static final ConfigReader configReader = new ConfigReader(AllStepDefinition.class);
 
 	@Before
-	public void beforeScenario(){
+	public void beforeScenario(Scenario scenario){
+		
+		LOGGER.info("Starting Test : " + scenario.getName());
 
 		driverManager = DriverManagerFactory.getManager("chrome");
 		driver = driverManager.getDriver("chrome");
-		wait = new WebDriverWait(driver, 10, 500);
+		wait = GlobalUtils.waitFor(driver, 10, 500);
+		
 		LOGGER.info("Driver setup is complete");
 
 	}	
-
+	
+	/* This method runs just before the afterScenario() 
+	 * and attaches failure screenshot to extent Report
+	*/
 	@After(order = 1)
 	public void afterScenario(Scenario scenario) {
 		
 		File destinationPath  = null;
-
-		LOGGER.info("Getting screenshot" + scenario.isFailed());
 		if (scenario.isFailed()) {
 
-			LOGGER.info("Getting screenshot if ");
 			String screenshotName = scenario.getName().replaceAll(" ", "_") ;
 			String date = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());			
 			screenshotName = screenshotName + "-" + date.replaceAll(":", "_");
@@ -87,6 +92,8 @@ public class AllStepDefinition{
 
 				//This attach the specified screenshot to the test
 				Reporter.addScreenCaptureFromPath(destinationPath.toString());
+				
+				LOGGER.info("Screenshot captured");
 
 			} catch (IOException e) {
 
@@ -97,18 +104,21 @@ public class AllStepDefinition{
 		}
 	}
 
-
+	/* This method runs at the last of a test case run and closes current driver instance
+	 * 
+	*/
 	@After(order = 0)
 	public void afterScenario(){
-		LOGGER.info("This will run after the Scenario");
+		LOGGER.info("Closing driver instance \n");
 		driverManager.quitDriver();
 	}
 
+	@SuppressWarnings("static-access")
 	@Given("^User Navigates to 'AutomationPractice' Website URL$")
 	public void user_Navigates_to_AutomationPractice_Website_URL(){
 
-		driver.get("http://automationpractice.com/index.php");
-		LOGGER.info("Driver navigates to automationpractice.com");
+		LOGGER.info("Driver navigates to " + configReader.getProperty("URL"));
+		driver.get(configReader.getProperty("URL"));
 
 	}
 
@@ -136,10 +146,7 @@ public class AllStepDefinition{
 	public void user_clicks_on_sign_in(){
 
 		loginPage.clickLoginSubmit();
-
 		LOGGER.info("Clicked on Login Button");
-
-
 
 	}
 
@@ -155,96 +162,6 @@ public class AllStepDefinition{
 		assertTrue(driver.findElement(By.className("logout")).isDisplayed());
 		Assert.assertTrue(driver.getCurrentUrl().contains("controller=my-accountx"));
 
-	}
-
-
-
-	@Given("^Module1 environment setup$")
-	public void module1_environment_setup() {
-		System.out.println("Step--  module1_environment_setup");
-	}
-
-	@Given("^M1U1TC1 User navigates to home screen$")
-	public void M1U1TC1_User_navigates_to_home_screen() {
-		System.out.println("Step--  M1U1TC1_User_navigates_to_home_screen");
-	}
-
-	@When("^M1U1TC1 User initiates login with following credentials \"([^\"]*)\" and \"([^\"]*)\"$")
-	public void M1U1TC1_User_initiates_login_with_following_credentials_and(String userName, String password) {
-		System.out.println("Step--  M1U1TC1_User_initiates_login_with_following_credentials_and");
-	}
-
-	@Then("^M1U1TC1 Login validation should be successful$")
-	public void M1U1TC1_Login_validation_should_be_successful() {
-		System.out.println("Step--  M1U1TC1_Login_validation_should_be_successful");
-	}
-
-	@Given("^M1U1TC2 Dummy step$")
-	public void M1U1TC2_Dummy_step() {
-		System.out.println("Step--  M1U1TC2_Dummy_step");
-	}
-
-	@Given("^M1U1TC3 Dummy step$")
-	public void M1U1TC3_Dummy_step() {
-		System.out.println("Step--  M1U1TC3_Dummy_step");
-	}
-
-	@Given("^M1U2TC1 Dummy step$")
-	public void M1U2TC1_Dummy_step() {
-		System.out.println("Step--  M1U2TC1_Dummy_step");
-	}
-
-	@Given("^M1U2TC2 Dummy step$")
-	public void M1U2TC2_Dummy_step() {
-		System.out.println("Step--  M1U2TC2_Dummy_step");
-	}
-
-	@Given("^M2U1TC1 Dummy step$")
-	public void M2U1TC1_Dummy_step() {
-		System.out.println("Step--  M2U1TC1_Dummy_step");
-		Assert.fail();
-	}
-
-	@Given("^M2U1TC2 Dummy step$")
-	public void M2U1TC2_Dummy_step() {
-		System.out.println("Step--  M2U1TC2_Dummy_step");
-	}
-
-	@Given("^M2U2TC1 Dummy step$")
-	public void M2U2TC1_Dummy_step() {
-		System.out.println("Step--  M2U2TC1_Dummy_step");
-	}
-
-	@Given("^M2U2TC2 Dummy step$")
-	public void M2U2TC2_Dummy_step() {
-		System.out.println("Step--  M2U2TC2_Dummy_step");
-	}
-
-	@Given("^M3U1TC1 Dummy step$")
-	public void M3U1TC1_Dummy_step() {
-		System.out.println("Step--  M3U1TC1_Dummy_step");
-	}
-
-	@Given("^M3U1TC2 Dummy step$")
-	public void M3U1TC2_Dummy_step() {
-		System.out.println("Step--  M3U1TC2_Dummy_step");
-		Assert.fail();
-	}
-
-	@Given("^M3U2TC1 Dummy step$")
-	public void M3U2TC1_Dummy_step() {
-		System.out.println("Step--  M3U2TC1_Dummy_step");
-	}
-
-	@Given("^M3U2TC2 Dummy step$")
-	public void M3U2TC2_Dummy_step() {
-		System.out.println("Step--  M3U2TC2_Dummy_step");
-	}
-
-	@Given("^M3U2TC3 Dummy step$")
-	public void M3U2TC3_Dummy_step() {
-		System.out.println("Step--  M3U2TC3_Dummy_step");
-		Assert.fail();
 	}
 
 

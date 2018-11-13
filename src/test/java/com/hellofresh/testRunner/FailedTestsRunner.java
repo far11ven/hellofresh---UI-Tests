@@ -1,26 +1,30 @@
-package com.hellofresh.testrunner;
+package com.hellofresh.testRunner;
 
-import java.io.File;
-
-import org.junit.AfterClass;
 import org.junit.runner.RunWith;
-
-import com.cucumber.listener.Reporter;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 
+import java.io.File;
+
+import org.junit.AfterClass;
+
+import com.cucumber.listener.Reporter;
+
+
 @RunWith(Cucumber.class)
 @CucumberOptions(
-		features = {"src/test/resources/features"},
+		features = "@target/rerun.txt",              //Cucumber picks the failed scenarios from this file 
 		glue = {"com.hellofresh.stepDefinition"},
 		plugin = {"com.cucumber.listener.ExtentCucumberFormatter:target/cucumber-reports/report.html", "rerun:target/rerun.txt"},
 		tags = {"@all"},
 		dryRun = false,
 		monochrome = true
-)
+		
+		)
 
-public class CucumberTestRunnerReporter {
+public class FailedTestsRunner {
+	
 	
 	 @AfterClass
 	    public static void reporterSetup() {
@@ -29,7 +33,7 @@ public class CucumberTestRunnerReporter {
 
 	        Reporter.setSystemInfo("Test User", "Tester1");
 	        Reporter.setSystemInfo("Operating System Type", System.getProperty("os.name").toString());
-	        Reporter.setSystemInfo("Web App Name", "AutomationPractice.com");
+	        Reporter.setSystemInfo("Web App Name", "AutomationPractice.com Re-Run");
 	        Reporter.setSystemInfo("Build version", "v 1.0");
 	        Reporter.setTestRunnerOutput("Cucumber reporting using Extent Config");
 	    }

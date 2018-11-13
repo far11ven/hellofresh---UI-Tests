@@ -2,7 +2,11 @@ package com.hellofresh.driverfactory;
 
 import org.openqa.selenium.WebDriver;
 
+import com.hellofresh.utils.LogUtils;
+
 public abstract class DriverManager {
+	
+	private static final LogUtils LOGGER = new LogUtils(DriverManager.class);
 	
 	DriverManager driverManager;
 	
@@ -18,7 +22,7 @@ public abstract class DriverManager {
     
    public WebDriver getDriver(String browserType) {
     	
-    	System.out.println(" browserType : " + browserType);
+	   LOGGER.info("browser : " + browserType);
     	
         if (null == driver) {
 
