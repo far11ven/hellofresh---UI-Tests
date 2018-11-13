@@ -1,7 +1,5 @@
 package com.hellofresh.challenge;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,12 +11,6 @@ import com.hellofresh.driverfactory.DriverManager;
 import com.hellofresh.driverfactory.DriverManagerFactory;
 
 
-
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertEquals;
-
-import org.junit.After;
-
 public class WebTest {
 	
 	DriverManager driverManager;
@@ -28,17 +20,17 @@ public class WebTest {
 
     String existingUserEmail = "hf_challenge_123456@hf12345.com";
     String existingUserPassword = "12345678";
-    @Before
+   /* @Before
     public void setUp() {
     	
     	driverManager = DriverManagerFactory.getManager("CHROME");
     	driver = driverManager.getDriverInstance();
     	
-        /*System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
         driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, 10, 50);*/
+        wait = new WebDriverWait(driver, 10, 50);
         driver.get("http://automationpractice.com/index.php");
-    }
+    }*/
 
    /* @Test
     public void signInTest() {
@@ -96,21 +88,6 @@ public class WebTest {
         assertTrue(driver.getCurrentUrl().contains("controller=my-account"));
     } */
     
-    @Test
-    public void logInTest1() {
-        String fullName = "Joe Black";
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("login"))).click();
-        driver.findElement(By.id("email")).sendKeys(existingUserEmail);
-        driver.findElement(By.id("passwd")).sendKeys(existingUserPassword);
-        driver.findElement(By.id("SubmitLogin")).click();
-        WebElement heading = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("h1")));
-
-        assertEquals("MY ACCOUNT", heading.getText());
-        assertEquals(fullName, driver.findElement(By.className("account")).getText());
-        assertTrue(driver.findElement(By.className("info-account")).getText().contains("Welcome to your account."));
-        assertTrue(driver.findElement(By.className("logout")).isDisplayed());
-        assertTrue(driver.getCurrentUrl().contains("controller=my-account"));
-    }
 
  /*   @Test
     public void checkoutTest() {
@@ -141,9 +118,9 @@ public class WebTest {
     /* 	This will get called after all the tests are finsihed
      * 
     */
-    @After
+/*    @After
     public void tearDown() {
     	
     	driverManager.quitDriver();
-    }
+    }*/
 }

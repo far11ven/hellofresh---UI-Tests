@@ -24,7 +24,7 @@ import com.google.common.io.Files;
 import com.hellofresh.driverfactory.DriverManager;
 import com.hellofresh.driverfactory.DriverManagerFactory;
 import com.hellofresh.pages.LoginPage;
-
+import com.hellofresh.utils.LogUtils;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -42,110 +42,121 @@ public class AllStepDefinition{
 
 	String fullName = "Joe Black";
 
+	private final LogUtils LOGGER = new LogUtils(AllStepDefinition.class);
+
 	@Before
 	public void beforeScenario(){
-		
-		driverManager = DriverManagerFactory.getManager("firefox");
-		driver = driverManager.getDriver("firefox");
+
+		driverManager = DriverManagerFactory.getManager("chrome");
+		driver = driverManager.getDriver("chrome");
 		wait = new WebDriverWait(driver, 10, 500);
-		System.out.println("Driver setup is complete");
-				
+		LOGGER.info("Driver setup is complete");
+
 	}	
-	
+
 	@After(order = 1)
 	public void afterScenario(Scenario scenario) {
 		
-		System.out.println("Getting screenshot" + scenario.isFailed());
+		File destinationPath  = null;
+
+		LOGGER.info("Getting screenshot" + scenario.isFailed());
 		if (scenario.isFailed()) {
-			
-			System.out.println("Getting screenshot if ");
+
+			LOGGER.info("Getting screenshot if ");
 			String screenshotName = scenario.getName().replaceAll(" ", "_") ;
 			String date = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());			
 			screenshotName = screenshotName + "-" + date.replaceAll(":", "_");
-			
+
 			try {
 				//This takes a screenshot from the driver at save it to the specified location
 				File sourcePath = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-				
+
 				//Building up the destination path for the screenshot to save
-				//Also make sure to create a folder 'screenshots' with in the cucumber-report folder
-				File destinationPath = new File(System.getProperty("user.dir") + "/target/cucumber-reports/screenshots/" + screenshotName + ".png");
+				boolean screenshotDirectory = new File(System.getProperty("user.dir") + "/target/cucumber-reports/screenshots/").mkdirs();
+
+				if(screenshotDirectory){
+					
+					LOGGER.info("Creating new Screenshot directory..");
+
+				}
 				
+				destinationPath = new File(System.getProperty("user.dir") + "/target/cucumber-reports/screenshots/" + screenshotName + ".png");
+
 				//Copy taken screenshot from source location to destination location
 				Files.copy(sourcePath, destinationPath);   
- 
+
 				//This attach the specified screenshot to the test
 				Reporter.addScreenCaptureFromPath(destinationPath.toString());
-				
+
 			} catch (IOException e) {
-				
-				System.out.println("Error capturing screenshot");
+
+				LOGGER.warn("Something went wrong capturing screenshot");
 				e.printStackTrace();
-				
+
 			} 
 		}
 	}
-	
-	
+
+
 	@After(order = 0)
 	public void afterScenario(){
-		System.out.println("This will run after the Scenario");
+		LOGGER.info("This will run after the Scenario");
 		driverManager.quitDriver();
 	}
 
 	@Given("^User Navigates to 'AutomationPractice' Website URL$")
 	public void user_Navigates_to_AutomationPractice_Website_URL(){
-		
+
 		driver.get("http://automationpractice.com/index.php");
-		System.out.println("Driver navigates to automationpractice.com");
+		LOGGER.info("Driver navigates to automationpractice.com");
 
 	}
 
 	@Given("^User clicks on 'SignIn' link from header$")
 	public void user_clicks_on_sign_in_link(){
 		loginPage = PageFactory.initElements(driver, LoginPage.class);
-		
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("login"))).click();
-        System.out.println("Clicked on Login Link");
-     
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("login"))).click();
+		LOGGER.info("Clicked on Login Link");
+
 	}
 
 
 
 	@When("^User provides valid credentials for \"([^\"]*)\" and \"([^\"]*)\"$")
 	public void usser_initiates_login_with_valid_credentials(String userName, String password) {
-		 loginPage.enterEmailId(userName);
-		 loginPage.enterPassword(password);
-		 
-		 System.out.println("Entered user Credentials");
-		 	        
+		loginPage.enterEmailId(userName);
+		loginPage.enterPassword(password);
+
+		LOGGER.info("Entered user Credentials");
+
 	}
 
 	@Given("^User clicks on 'SignIn' button$")
 	public void user_clicks_on_sign_in(){
-		
-		loginPage.clickLoginSubmit();
-		
-		System.out.println("Clicked on Login Button");
 
-		
+		loginPage.clickLoginSubmit();
+
+		LOGGER.info("Clicked on Login Button");
+
+
 
 	}
-	
+
 	@Given("^Verify user is loggedIn$")
 	public void verify_user_is_logged_in(){
-		
+
 
 		WebElement heading = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("h1")));
 
-        assertEquals("MY ACCOUNT", heading.getText());
-        assertEquals(fullName, driver.findElement(By.className("account")).getText());
-        assertTrue(driver.findElement(By.className("info-account")).getText().contains("Welcome to your account."));
-        assertTrue(driver.findElement(By.className("logout")).isDisplayed());
-        Assert.assertTrue(driver.getCurrentUrl().contains("controller=my-accountx"));
-		
+		assertEquals("MY ACCOUNT", heading.getText());
+		assertEquals(fullName, driver.findElement(By.className("account")).getText());
+		assertTrue(driver.findElement(By.className("info-account")).getText().contains("Welcome to your account."));
+		assertTrue(driver.findElement(By.className("logout")).isDisplayed());
+		Assert.assertTrue(driver.getCurrentUrl().contains("controller=my-accountx"));
+
 	}
-	
+
 
 
 	@Given("^Module1 environment setup$")
