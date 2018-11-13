@@ -7,7 +7,7 @@ public abstract class DriverManager {
 	DriverManager driverManager;
 	
 	protected WebDriver driver;
-    protected abstract WebDriver createDriverInstance(String browserType);
+    public abstract WebDriver getDriverInstance();
 
     public void quitDriver() {
         if (null != driver) {
@@ -16,23 +16,28 @@ public abstract class DriverManager {
         }
     }
     
-    public WebDriver getDriver(String browserType) {
+   public WebDriver getDriver(String browserType) {
     	
     	System.out.println(" browserType : " + browserType);
     	
         if (null == driver) {
-        	System.out.println(" Inside If : " + browserType);
-        	switch (browserType) {
-        	
-        		case "CHROME":
-        					driverManager = new ChromeDriverManager();
-        					driver = driverManager.createDriverInstance(browserType);
-        					break;
+
+        	switch (browserType.toLowerCase()) {
+        		case "chrome":
+        			driverManager = new ChromeDriverManager();
+        			driver = driverManager.getDriverInstance();
+        			break;
+        					
+        		case "firefox":
+					driverManager = new FirefoxDriverManager();
+					driver = driverManager.getDriverInstance();
+					break;
         					
         	}
         }
         
         return driver;
     }
+ 
 
 }

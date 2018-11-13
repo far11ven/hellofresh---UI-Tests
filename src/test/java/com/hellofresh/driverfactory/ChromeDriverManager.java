@@ -7,11 +7,12 @@ import org.openqa.selenium.chrome.ChromeOptions;
 public class ChromeDriverManager extends DriverManager {
 	
 	protected WebDriver driver;
+	
+	@Override
+	public WebDriver getDriverInstance() {
+		
+		System.setProperty("webdriver.chrome.driver", "src/test/resources/drivers/chromedriver.exe");
 
-	public WebDriver createDriverInstance(String browser) {
-		
-		 System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
-		
 		ChromeOptions options = new ChromeOptions();
 	    options.addArguments("--start-maximized");
         driver = new ChromeDriver(options);

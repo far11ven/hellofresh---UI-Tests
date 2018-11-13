@@ -45,7 +45,7 @@ public class LoginPage {
 		
 	}
 	
-  public void clickLoginSubmit(String pwd) {
+  public void clickLoginSubmit() {
 		
 	  loginSubmit.click();
 		

@@ -7,18 +7,20 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.hellofresh.driverfactory.DriverManager;
 import com.hellofresh.driverfactory.DriverManagerFactory;
 
-import java.util.Date;
+
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
+import org.junit.After;
+
 public class WebTest {
+	
 	DriverManager driverManager;
 	WebDriver driver;
 
@@ -30,7 +32,7 @@ public class WebTest {
     public void setUp() {
     	
     	driverManager = DriverManagerFactory.getManager("CHROME");
-    	driver = driverManager.getDriver("CHROME");
+    	driver = driverManager.getDriverInstance();
     	
         /*System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
         driver = new ChromeDriver();
@@ -78,7 +80,7 @@ public class WebTest {
         assertTrue(driver.getCurrentUrl().contains("controller=my-account"));
     }*/
 
-    @Test
+  /*  @Test
     public void logInTest() {
         String fullName = "Joe Black";
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("login"))).click();
@@ -92,10 +94,10 @@ public class WebTest {
         assertTrue(driver.findElement(By.className("info-account")).getText().contains("Welcome to your account."));
         assertTrue(driver.findElement(By.className("logout")).isDisplayed());
         assertTrue(driver.getCurrentUrl().contains("controller=my-account"));
-    } 
+    } */
     
     @Test
-    public void logInTest2() {
+    public void logInTest1() {
         String fullName = "Joe Black";
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("login"))).click();
         driver.findElement(By.id("email")).sendKeys(existingUserEmail);
@@ -135,4 +137,13 @@ public class WebTest {
         assertTrue(driver.findElement(By.xpath("//*[@class='cheque-indent']/strong")).getText().contains("Your order on My Store is complete."));
         assertTrue(driver.getCurrentUrl().contains("controller=order-confirmation"));
     }*/
+    
+    /* 	This will get called after all the tests are finsihed
+     * 
+    */
+    @After
+    public void tearDown() {
+    	
+    	driverManager.quitDriver();
+    }
 }

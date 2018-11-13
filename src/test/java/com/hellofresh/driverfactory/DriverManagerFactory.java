@@ -6,12 +6,12 @@ public class DriverManagerFactory {
 
         DriverManager driverManager = null;
 
-        switch (browser) {
-            case "CHROME":
+        switch (browser.toLowerCase()) {
+            case "chrome":
                 driverManager = new ChromeDriverManager();
                 break;
-            case "FIREFOX":
-                //driverManager = new FirefoxDriverManager();
+            case "firefox":
+                driverManager = new FirefoxDriverManager();
                 break;
         }
         
