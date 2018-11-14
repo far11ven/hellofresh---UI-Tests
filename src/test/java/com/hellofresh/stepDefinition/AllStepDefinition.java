@@ -39,6 +39,7 @@ public class AllStepDefinition{
 
 	DriverManager driverManager;
 	WebDriver driver;
+	String browser;
 	RegistrationPage registrationPage;
 	LoginPage loginPage;
 	HomePage homePage;
@@ -65,9 +66,9 @@ public class AllStepDefinition{
 		currScenarioName = scenario.getName();
 
 		LOGGER.info("Starting Test : " + currScenarioName);
-
-		driverManager = DriverManagerFactory.getManager("chrome");
-		driver = driverManager.getDriver("chrome");
+		
+		driverManager = DriverManagerFactory.getManager();
+		driver = driverManager.getDriver();
 		wait = GlobalUtils.waitDefault(driver);
 
 		LOGGER.info("Driver setup is complete");
@@ -285,14 +286,16 @@ public class AllStepDefinition{
 		//verify user is on Women's page
 		Assert.assertTrue("Title does-not match", driver.getTitle().contains("Women"));
 
-		GlobalUtils.waitForElementToBeClickable(driver, productPage.tShirtslink);
-		productPage.clickWomensTshirtsLink();
 		productPage.clickFadedTshirtsLink();
+		
+		GlobalUtils.waitForElementToBeClickable(driver, productPage.productNameLabel);
 
 		//Storing product details, which will be verified during checkout process
 		productName = productPage.getProductName();
 		productPrice = productPage.getProductPrice();
 		productQty = productPage.getProductSelectedQty();
+		
+		GlobalUtils.waitForElementToBeClickable(driver, productPage.addToCartBtn);
 
 		//Adding product to cart
 		productPage.clickAddToCart();

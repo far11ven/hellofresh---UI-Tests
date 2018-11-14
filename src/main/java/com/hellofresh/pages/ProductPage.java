@@ -13,11 +13,7 @@ public class ProductPage {
 
 	WebDriver driver;
 	
-	@FindBy(xpath="//a[@title='Faded Short Sleeve T-shirts']/ancestor::li")
-	@CacheLookup
-	public WebElement tShirtslink ;
-
-	@FindBy(xpath="//a[@title='Faded Short Sleeve T-shirts']/ancestor::li")
+	@FindBy(css="a.product-name[title='Faded Short Sleeve T-shirts']")
 	@CacheLookup
 	public WebElement fadedTshirtProduct ;
 	
@@ -51,12 +47,6 @@ public class ProductPage {
 		PageFactory.initElements(driver, this);
 	}
 
-	
-	public void clickWomensTshirtsLink() {
-
-		tShirtslink.click();
-
-	}
 
 	public void clickFadedTshirtsLink() {
 
