@@ -7,44 +7,79 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage {
-	
+
 	WebDriver driver;
-	
+
+	@FindBy(className="login")
+	@CacheLookup
+	public WebElement loginLink ;
+
+	@FindBy(id="email_create")
+	@CacheLookup
+	public WebElement registerUserEmailTxtbox ;
+
 	@FindBy(id="email")
 	@CacheLookup
-	WebElement emailTxtbox ;
-	
+	public WebElement emailTxtbox ;
+
 	@FindBy(id="passwd")
 	@CacheLookup
-	WebElement passwordTxtbox ;
+	public WebElement passwordTxtbox ;
+
+	@FindBy(css="div.alert.alert-danger")
+	@CacheLookup
+	public WebElement errorMessageBox ;
 	
+	@FindBy(id="SubmitCreate")
+	@CacheLookup
+	public WebElement createAnAccountBtn ;
+
 	@FindBy(id="SubmitLogin")
 	@CacheLookup
-	WebElement loginSubmit ;
-	
+	public WebElement loginSubmit ;
+
 	public LoginPage(WebDriver driver) {           
-        this.driver = driver; 
-        PageFactory.initElements(driver, this);
+		this.driver = driver; 
+		PageFactory.initElements(driver, this);
 	}
-	
+
+	public void enterNewUserEmailId(String email) {
+
+		registerUserEmailTxtbox.sendKeys(email);
+
+	}
+
 	public void enterEmailId(String email) {
-		
+
 		emailTxtbox.sendKeys(email);
-			
+
 	}
-	
+
+	public String getErrorMessageText() {
+
+		return errorMessageBox.getText();
+
+	}
+
 	public void enterPassword(String pwd) {
-		
+
 		passwordTxtbox.sendKeys(pwd);
-		
-		
+
+
 	}
 	
-  public void clickLoginSubmit() {
-		
-	  loginSubmit.click();
-		
-	
+	public void clickCreateAccount() {
+
+		createAnAccountBtn.click();
+
+
 	}
-	
+
+	public void clickLoginSubmit() {
+
+		loginSubmit.click();
+
+
+	}
+
 }

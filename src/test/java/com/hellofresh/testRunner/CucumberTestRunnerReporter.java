@@ -15,7 +15,7 @@ import cucumber.api.junit.Cucumber;
 		features = {"src/test/resources/features"},
 		glue = {"com.hellofresh.stepDefinition"},
 		plugin = {"com.cucumber.listener.ExtentCucumberFormatter:target/cucumber-reports/report.html", "rerun:target/rerun.txt"},
-		tags = {"@all"},
+		tags = {"@m5u1"},
 		dryRun = false,
 		monochrome = true
 )

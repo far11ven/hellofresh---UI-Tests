@@ -54,19 +54,23 @@ public class GlobalUtils {
 
 	}
 
-	public static boolean waitForElementToBeVisible(WebDriver driver, WebElement elem) {
+	public static WebElement waitForElementToBeVisible(WebDriver driver, WebElement elem) {
 
 		WebDriverWait wait = waitFor(driver, 10, 200);
 
-		return wait.until(ExpectedConditions.visibilityOf(elem)) != null;
+		wait.until(ExpectedConditions.visibilityOf(elem));
+		
+		return elem;
 
 	}
 
-	public static boolean waitForElementToBeClickable(WebDriver driver,  WebElement elem) {
+	public static WebElement waitForElementToBeClickable(WebDriver driver,  WebElement elem) {
 
 		WebDriverWait wait = waitFor(driver, 10, 200);
 
-		return wait.until(ExpectedConditions.elementToBeClickable(elem)) != null;
+		wait.until(ExpectedConditions.visibilityOf(elem));
+		
+		return elem;
 
 	}
 
