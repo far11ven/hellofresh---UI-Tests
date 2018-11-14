@@ -3,6 +3,9 @@ package com.hellofresh.driverfactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+/*
+ * This class provides instance of geckodriver, if "BrowserType" is supplied as firefox
+*/
 public class FirefoxDriverManager extends DriverManager {
 	
 	protected WebDriver driver;

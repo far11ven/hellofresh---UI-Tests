@@ -3,7 +3,7 @@ Feature: LoginWithWrongCredentials [Negitive Scenario]
   Background: 
     Given User Navigates to 'AutomationPractice' Website URL
     
-  @m1u1 @all @negative
+  @m2u1 @all @negative
   Scenario Outline: TC2 - Login with multiple users
     Given User clicks on 'SignIn' link from header
     When User provides valid credentials for "<Username>" and "<Password>"

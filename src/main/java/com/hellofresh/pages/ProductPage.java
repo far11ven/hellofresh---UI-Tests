@@ -6,6 +6,9 @@ import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+/*
+ * This class provides instance of ProductPage and provides instantiation for all the web elements and their actions
+*/
 public class ProductPage {
 
 	WebDriver driver;
@@ -31,7 +34,6 @@ public class ProductPage {
 	public WebElement productNameLabel ;
 	
 	@FindBy(id="our_price_display")
-	@CacheLookup
 	public WebElement productPriceLabel ;
 	
 	@FindBy(id="quantity_wanted")
@@ -94,7 +96,7 @@ public class ProductPage {
 	
 	public String getProductSelectedQty() {
 
-		return productQuantityTxtbox.getText();
+		return productQuantityTxtbox.getAttribute("value");
 
 	}
 

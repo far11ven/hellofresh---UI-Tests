@@ -4,6 +4,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+/*
+ * This class provides instance of chromedriver, if "BrowserType" is supplied as chrome
+*/
 public class ChromeDriverManager extends DriverManager {
 	
 	protected WebDriver driver;

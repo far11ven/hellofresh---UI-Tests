@@ -1,7 +1,7 @@
 Feature: SuccessfulUserLogin [Positive Senario]
  
     
-  @m2u2 @all @positive
+  @m3u2 @all @positive
   Scenario Outline: TC1 - Successful Login with Single user
     Given User Navigates to 'AutomationPractice' Website URL
     Then User clicks on 'SignIn' link from header

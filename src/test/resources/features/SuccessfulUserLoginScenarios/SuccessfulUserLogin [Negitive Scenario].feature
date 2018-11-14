@@ -3,7 +3,7 @@ Feature: SuccessfulUserLogin [Negitive Scenario]
   Background: 
     Given User Navigates to 'AutomationPractice' Website URL
     
-  @m2u1 @all @negative
+  @m3u1 @all @negative
   Scenario Outline: TC2 - Successful Login with Single user
     Given User clicks on 'SignIn' link from header
     When User provides valid credentials for "<Username>" and "<Password>"

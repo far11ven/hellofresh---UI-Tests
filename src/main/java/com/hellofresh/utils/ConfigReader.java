@@ -1,13 +1,14 @@
 package com.hellofresh.utils;
 
-
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+/*
+ * This class provides instance of ConfigReader for reading values from "config.properties"
+*/
 public class ConfigReader {
 
 	private static LogUtils LOGGER;
@@ -19,6 +20,9 @@ public class ConfigReader {
 		LOGGER = new LogUtils(ClassName);
 	}
 
+	/*
+	 * This method provides reading values from "config.properties", takes one parameter "propName" whose value needs to be returned
+	*/
 	public static String getProperty(String propName) {
 
 		try {

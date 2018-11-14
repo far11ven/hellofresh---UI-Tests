@@ -4,6 +4,9 @@ import org.openqa.selenium.WebDriver;
 
 import com.hellofresh.utils.LogUtils;
 
+/*
+ * This class provides instance of WebDriver
+ */
 public abstract class DriverManager {
 	
 	private static final LogUtils LOGGER = new LogUtils(DriverManager.class);
@@ -12,7 +15,10 @@ public abstract class DriverManager {
 	
 	protected WebDriver driver;
     public abstract WebDriver getDriverInstance();
-
+    
+    /*
+     * This method closes the active driver instance
+     */
     public void quitDriver() {
         if (null != driver) {
             driver.quit();
@@ -20,6 +26,9 @@ public abstract class DriverManager {
         }
     }
     
+    /*
+     * This method provides instance of a driver based on BrowserType
+     */
    public WebDriver getDriver(String browserType) {
     	
 	   LOGGER.info("browser : " + browserType);

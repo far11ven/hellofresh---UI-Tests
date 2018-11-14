@@ -10,12 +10,16 @@ import com.cucumber.listener.Reporter;
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 
+
+/*
+ * This class provides Main TestRunner for all the features
+*/
 @RunWith(Cucumber.class)
 @CucumberOptions(
 		features = {"src/test/resources/features"},
 		glue = {"com.hellofresh.stepDefinition"},
 		plugin = {"com.cucumber.listener.ExtentCucumberFormatter:target/cucumber-reports/report.html", "rerun:target/rerun.txt"},
-		tags = {"@m5u1"},
+		tags = {"@m1u1"},
 		dryRun = false,
 		monochrome = true
 )

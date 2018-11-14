@@ -6,6 +6,9 @@ import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+/*
+ * This class provides instance of LoginPage and provides instantiation for all the web elements and their actions
+*/
 public class LoginPage {
 
 	WebDriver driver;

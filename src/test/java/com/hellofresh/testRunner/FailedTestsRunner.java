@@ -11,7 +11,9 @@ import org.junit.AfterClass;
 
 import com.cucumber.listener.Reporter;
 
-
+/*
+ * This class provides TestRunner for Failed features
+*/
 @RunWith(Cucumber.class)
 @CucumberOptions(
 		features = "@target/rerun.txt",              //Cucumber picks the failed scenarios from this file 

@@ -1,7 +1,7 @@
 Feature: SuccessfulUserSignUp [Positive Senario]
  
     
-  @m3u1 @all @positive
+  @m4u1 @all @positive
   Scenario Outline: TC4- Successful registration for new user
     Given User Navigates to 'AutomationPractice' Website URL
     Then User clicks on 'SignIn' link from header

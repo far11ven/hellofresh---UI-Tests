@@ -6,6 +6,10 @@ import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+/*
+ * This class provides instance of CheckoutPage and provides instantiation for all the web elements and their actions
+*/
+
 public class CheckoutPage {
 
 	WebDriver driver;
@@ -19,7 +23,6 @@ public class CheckoutPage {
 	public WebElement productPriceLabel ;
 
 	@FindBy(css="input.grey[name^='quantity_']")
-	@CacheLookup
 	public WebElement productQuantityTxtbox ;
 	
 	@FindBy(css="td.cart_description > p.product-name")
@@ -108,7 +111,7 @@ public class CheckoutPage {
 
 	public String getAddedProductQty() {
 
-		return productQuantityTxtbox.getText();
+		return productQuantityTxtbox.getAttribute("value");
 	}
 	
 	public String getCurrentCheckoutStepTitle() {

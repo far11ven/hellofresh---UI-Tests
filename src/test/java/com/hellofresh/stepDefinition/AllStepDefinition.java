@@ -49,9 +49,9 @@ public class AllStepDefinition{
 	String userFirstName;
 	String userLastName;
 
-	static String productName;
-	static String productPrice;
-	static String productQty;
+	String productName;
+	String productPrice;
+	String productQty;
 
 
 	WebDriverWait wait;
@@ -68,7 +68,7 @@ public class AllStepDefinition{
 
 		driverManager = DriverManagerFactory.getManager("chrome");
 		driver = driverManager.getDriver("chrome");
-		wait = GlobalUtils.waitFor(driver, 10, 500);
+		wait = GlobalUtils.waitDefault(driver);
 
 		LOGGER.info("Driver setup is complete");
 
@@ -190,6 +190,7 @@ public class AllStepDefinition{
 
 		registrationPage.enterUserAddressAlias(userData.get("AddressAlias"));
 
+
 		registrationPage.clickRegisterButton();
 
 		LOGGER.info("User entered registration details");
@@ -280,6 +281,9 @@ public class AllStepDefinition{
 
 		// initializing ProductPage elements by creating HomePage class object
 		productPage = new ProductPage(driver);
+		
+		//verify user is on Women's page
+		Assert.assertTrue("Title does-not match", driver.getTitle().contains("Women"));
 
 		GlobalUtils.waitForElementToBeClickable(driver, productPage.tShirtslink);
 		productPage.clickWomensTshirtsLink();
@@ -391,7 +395,6 @@ public class AllStepDefinition{
 		Assert.assertEquals("Product Name do-not match", checkoutPage.getPaymentPageProductName(), productName);
 		Assert.assertEquals("Product Price do-not match", checkoutPage.getPaymentPageProductPrice(), productPrice);
 		
-		LOGGER.info("Ids ====" + checkoutPage.getPaymentPageProductQty() + " : " + productQty );
 		Assert.assertEquals("Product Qty do-not match", checkoutPage.getPaymentPageProductQty(), productQty);
 		checkoutPage.clickBankwirePaymentMode();
 
@@ -479,7 +482,7 @@ public class AllStepDefinition{
 				//This attach the specified screenshot to the test
 				Reporter.addScreenCaptureFromPath(destinationPath.toString());
 
-				LOGGER.info("Screenshot captured");
+				LOGGER.info("FAILURE!! Screenshot captured");
 
 			} catch (IOException e) {
 

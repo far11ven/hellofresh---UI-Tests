@@ -2,7 +2,6 @@ package com.hellofresh.utils;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -13,12 +12,17 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+
+/*
+ * This class provides instance of ExcelOperations for reading values from "RegistrationTestData.xlsx"
+*/
 public class ExcelOperations {
 
 	static String filePath = System.getProperty("user.dir") + ConfigReader.getProperty("REGISTRATION_TEST_DATA");
 	
 	/*
-	 * This method readas whole row as a single dictionary record from excel sheet
+	 * This method reads whole row as a single dictionary record from excel sheet
+	 * it takes two parameters "sheetName" sheet to refer and "currTestName" row to refer
 	 */
 	public static Dictionary<String, String> readRecordFromExcel(String sheetName, String currTestName) {
 

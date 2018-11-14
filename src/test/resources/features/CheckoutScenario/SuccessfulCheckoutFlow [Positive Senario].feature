@@ -1,7 +1,7 @@
 Feature: SuccessfulCheckoutFlow [Positive Senario]
  
     
-  @m5u1 @all @positive
+  @m1u1 @all @positive
   Scenario Outline: TC5 - Successful checkout with valid user
     Given User Navigates to 'AutomationPractice' Website URL
     Then User clicks on 'SignIn' link from header
